@@ -34,7 +34,7 @@
                     </button>
                 </div>
             </form>
-            <form id="edit-form" class="-hide">
+            <form id="edit-form" class="hide">
                 <h4>Task Edit:</h4>
                 <div class="form-control">
                     <input type="text" id="edit-input">
@@ -67,8 +67,21 @@
             </div>
             <!-- List of To Do's -->
             <div id="todo-list">
-                <div class="todo-item">
+                <h4>My To Do's:</h4>
+                <div class="todo-item done">
                     <h3>I'm doing something...</h3>
+                    <button class="finish-todo">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button class="edit-todo">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="delete-todo">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+                <div class="todo-item todo">
+                    <h3>Study Java...</h3>
                     <button class="finish-todo">
                         <i class="fa-solid fa-check"></i>
                     </button>
