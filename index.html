@@ -24,60 +24,62 @@
         <header>
             <h1>Advanced To Do</h1>
         </header>
-        <form id="todo-form">
-            <p>Add a task:</p>
-            <div class="form-control">
-                <input type="text" id="todo-input" placeholder="What's your task?">
-                <button type="submit" id="submit-btn">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
+        <div class="todo-container">
+            <form id="todo-form">
+                <h4>Add a task:</h4>
+                <div class="form-control">
+                    <input type="text" id="todo-input" placeholder="What's your task?">
+                    <button type="submit" id="add-submit-btn">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </form>
+            <form id="edit-form" class="-hide">
+                <h4>Task Edit:</h4>
+                <div class="form-control">
+                    <input type="text" id="edit-input">
+                    <button type="submit" id="edit-submit-btn">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                </div>
+                <button id="cancel-edit-btn">Cancel</button>
+            </form>
+            <div id="toolbar">
+                <!-- To Do's Search -->
+                <div id="search">
+                    <h4>Search:</h4>
+                    <form>
+                        <input type="text" id="search-input" placeholder="Search">
+                        <button id="delete-button">
+                            <i class="fa-solid fa-delete-left"></i>
+                        </button>
+                    </form>
+                </div>
+                <!-- Filter To Do's to show -->
+                <div id="filter">
+                    <h4>Filter:</h4>
+                    <select id="filter-select">
+                        <option value="all">All</option>
+                        <option value="done">Done</option>
+                        <option value="todo">To Do</option>
+                    </select>
+                </div>
             </div>
-        </form>
-        <form id="edit-form" class="-hide">
-            <p>Task Edit</p>
-            <div class="form-control">
-                <input type="text" id="edit-input">
-                <button type="submit" id="submit-btn">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-            </div>
-            <button id="cancel-edit-btn">Cancel</button>
-        </form>
-        <div id="toolbar">
-            <div id="search">
-                <h4>Search:</h4>
-                <form>
-                    <input type="text" id="search-input" placeholder="Search">
-                    <button id="delete-button">
+            <!-- List of To Do's -->
+            <div id="todo-list">
+                <div class="todo-item">
+                    <h3>I'm doing something...</h3>
+                    <button class="finish-todo">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button class="edit-todo">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="delete-todo">
                         <i class="fa-solid fa-trash"></i>
                     </button>
-                </form>
+                </div>
             </div>
-        </div>
-         <!-- Filter To Do's to show -->
-        <div id="filter">
-            <h4>Filter:</h4>
-            <select id="filter-select">
-                <option value="all">All</option>
-                <option value="done">Done</option>
-                <option value="todo">To Do</option>
-            </select>
-        </div>
-        <!-- List of To Do's -->
-        <div id="todo-list">
-            <div class="todo-item">
-                <h3>I'm doing something...</h3>
-                <button class="finish-todo">
-                    <i class="fa-solid fa-check"></i>
-                </button>
-                <button class="edit-todo">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-                <button class="delete-todo">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </div>
-
         </div>
     </div>
 </body>
