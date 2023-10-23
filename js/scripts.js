@@ -13,7 +13,7 @@ const filterBtn = document.querySelector("#filter-select");
 let oldInputValue;
 
 // Functions
-const saveToDo = (text) => {
+const saveToDo = (text, done = 0, save = 1) => {
     const toDoItemDiv = document.createElement("div");
     toDoItemDiv.classList.add("todo-item");
     const todoTitle = document.createElement("h3");
@@ -37,9 +37,20 @@ const saveToDo = (text) => {
     btnDelete.innerHTML = '<i class="fa-solid fa-trash"></i>';
     toDoItemDiv.appendChild(btnDelete);    
 
+    // Local Storage data
+    if(done) {
+        toDoItemDiv.classList.add("done")
+    }
+    
+    if(save) {
+        saveTodoLocalStorage({text: text, done: done})
+    }
+
     todoList.appendChild(toDoItemDiv);
     todoInput.value = "";
     todoInput.focus();
+
+    saveTodoLocalStorage(text);
 }
 
 const toggleForms = () => {
@@ -174,8 +185,20 @@ eraseBtn.addEventListener("click", (e)=> {
     searchInput.dispatchEvent(new Event("keyup"));   
 });
 
-
 filterBtn.addEventListener("change", (e)=> {
     const filterValue = e.target.value;
     filterToDos(filterValue);    
 });
+
+// Local Storage
+const getAllToDosFromLocalStorage = () => {
+    const allToDos = JSON.parse(localStorage.getItem("allToDos") ) || [];
+    return allToDos;
+}
+
+const saveTodoLocalStorage = (toDo) => {
+    const allToDos = getAllToDosFromLocalStorage();
+    allToDos.push(toDo);
+
+    localStorage.setItem("allToDos", JSON.stringify(allToDos));
+};
