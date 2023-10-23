@@ -75,6 +75,33 @@ const searchAndShow = (textToSearch) => {
     });
 }
 
+const filterToDos = (filterValue) => {
+    const allToDos = document.querySelectorAll(".todo-item");
+    switch(filterValue) {
+        case "all": {
+            allToDos.forEach((todo) => todo.style.display = "flex");
+            break;
+        }
+        case "done": {
+            allToDos.forEach((todo) => 
+                todo.classList.contains("done")
+                ? (todo.style.display = "flex")
+                : (todo.style.display = "none")
+            );
+            break;
+        }
+        case "todo": {
+            allToDos.forEach((todo) => 
+                !todo.classList.contains("done")
+                ? (todo.style.display = "flex")
+                : (todo.style.display = "none")
+            );
+            break;
+        }
+        default: break;
+    }
+}
+
 // Events
 
 todoForm.addEventListener("submit", (e) => {
@@ -145,4 +172,10 @@ eraseBtn.addEventListener("click", (e)=> {
 
     //to show again all ToDos
     searchInput.dispatchEvent(new Event("keyup"));   
+});
+
+
+filterBtn.addEventListener("change", (e)=> {
+    const filterValue = e.target.value;
+    filterToDos(filterValue);    
 });
