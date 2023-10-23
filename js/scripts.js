@@ -5,6 +5,12 @@ const todoList = document.querySelector("#todo-list");
 const editForm = document.querySelector("#edit-form");
 const editInput = document.querySelector("#edit-input");
 const cancelEditBtn = document.querySelector("#cancel-edit-btn");
+const searchInput = document.querySelector("#cancel-edit-btn");
+const eraseBtn = document.querySelector("#erase-button");
+const filterBtn = document.querySelector("#filter-select");
+
+//global variables
+let oldInputValue;
 
 // Functions
 const saveToDo = (text) => {
@@ -31,12 +37,38 @@ const saveToDo = (text) => {
     btnDelete.innerHTML = '<i class="fa-solid fa-trash"></i>';
     toDoItemDiv.appendChild(btnDelete);    
 
-    //by default the task isn't done
-    toDoItemDiv.classList.add("todo");
-
     todoList.appendChild(toDoItemDiv);
     todoInput.value = "";
     todoInput.focus();
+}
+
+const toggleForms = () => {
+    editForm.classList.toggle("hide");
+    todoForm.classList.toggle("hide");
+    todoList.classList.toggle("hide");
+}
+
+const updateToDo = (text) => {
+    const allToDos = document.querySelectorAll(".todo-item");
+    
+    allToDos.forEach((toDo) => {
+        let todoText = toDo.querySelector("h3");
+        if(todoText.innerText === oldInputValue){
+            todoText.innerText = text;
+        }        
+    });
+}
+
+
+const getAllFiltered = (textToSearch) => {
+    const allToDos = document.querySelectorAll(".todo-item");
+    
+    allToDos.forEach((toDo) => {
+        let todoText = toDo.querySelector("h3");
+        if(todoText.innerText === textToSearch){
+            console.log(todo.innerText);
+        }        
+    });
 }
 
 // Events
@@ -49,4 +81,56 @@ todoForm.addEventListener("submit", (e) => {
         //save ToDo
        saveToDo(inputValue);
     }
+});
+
+
+//buttons click event
+document.addEventListener("click", (elem) => {
+    const targetElement = elem.target;
+    const parentElement = targetElement.closest("div");
+    let todoText;
+    
+    if(parentElement && parentElement.querySelector("h3")){
+        todoText = parentElement.querySelector("h3").innerText;
+    }
+
+    //finish ToDo
+    if(targetElement.classList.contains("finish-todo")) {
+        parentElement.classList.toggle("done");
+    }
+    
+    //edit ToDo
+    if(targetElement.classList.contains("edit-todo")) {
+        toggleForms();
+        editInput.value = todoText;
+        oldInputValue = todoText;
+    }
+
+    //delete ToDo
+    if(targetElement.classList.contains("delete-todo")) {
+        parentElement.remove();
+    }
+
+});
+
+cancelEditBtn.addEventListener("click", (elem)=> {
+    elem.preventDefault();
+    toggleForms();
+});
+
+editForm.addEventListener("submit", (elem)=> {
+    elem.preventDefault();
+    
+    const editInputValue = editInput.value;
+
+    if(editInputValue){
+        updateToDo(editInputValue);       
+    }
+
+    toggleForms();
+});
+
+searchInput.addEventListener("keyup", (e)=> {
+    const searchText = e.target.value;
+    getAllFiltered(searchText);    
 });

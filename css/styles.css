@@ -34,10 +34,12 @@ button:hover >i {
 
 button i {
     color: #006bb3;
-    font-weight: bold;
+    font-weight: normal;
     pointer-events: none;
-    font-size: 0.9rem;
+    font-size: 1.2em;
 }
+
+
 
 input, select {
     padding: 0.20rem 0.5rem;
@@ -157,19 +159,24 @@ input, select {
     border-bottom: 1px solid #ccc;
     border-radius: 0 0 8px 0;
     transition: 0.4s;
+    background-color: #f76461;
 }
 
 .todo-item h3 {
     flex: 1;
     font-weight: normal;
     font-size: 0.93rem;
-    color:#006bb3;
+    color:#fff;
 }
 
 .todo-item button {
    margin-left: 0.2rem;
    padding: 0.25rem;
 }
+
+.todo-item button i{
+    font-size: 0.9rem;
+ }
 
 .todo-item button:last-of-type {
     margin-right: 0.25rem;
