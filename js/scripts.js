@@ -13,7 +13,7 @@ const filterBtn = document.querySelector("#filter-select");
 let oldInputValue;
 
 // Functions
-const saveToDo = (text, done = 0, save = 1) => {
+const addToDoToList = (text, done = false, save = true) => {
     const toDoItemDiv = document.createElement("div");
     toDoItemDiv.classList.add("todo-item");
     const todoTitle = document.createElement("h3");
@@ -43,14 +43,13 @@ const saveToDo = (text, done = 0, save = 1) => {
     }
     
     if(save) {
-        saveTodoLocalStorage({text: text, done: done})
+        addToDoToListLocalStorage({text: text, done: done})
+        //or addToDoToListLocalStorage({text, done})
     }
 
     todoList.appendChild(toDoItemDiv);
     todoInput.value = "";
     todoInput.focus();
-
-    saveTodoLocalStorage(text);
 }
 
 const toggleForms = () => {
@@ -69,7 +68,6 @@ const updateToDo = (text) => {
         }        
     });
 }
-
 
 const searchAndShow = (textToSearch) => {
     const allToDos = document.querySelectorAll(".todo-item");
@@ -113,6 +111,15 @@ const filterToDos = (filterValue) => {
     }
 }
 
+const loadFromLocalStorage  = ()=> {
+    const allToDos = getAllToDosFromLocalStorage();
+    
+    allToDos.forEach((toDo) => {
+        addToDoToList(toDo.text, toDo.done, false);
+    });
+
+};
+
 // Events
 
 todoForm.addEventListener("submit", (e) => {
@@ -121,7 +128,7 @@ todoForm.addEventListener("submit", (e) => {
     
     if(inputValue){
         //save ToDo
-       saveToDo(inputValue);
+       addToDoToList(inputValue);
     }
 });
 
@@ -196,9 +203,13 @@ const getAllToDosFromLocalStorage = () => {
     return allToDos;
 }
 
-const saveTodoLocalStorage = (toDo) => {
+const addToDoToListLocalStorage = (toDo) => {
+
     const allToDos = getAllToDosFromLocalStorage();
     allToDos.push(toDo);
 
     localStorage.setItem("allToDos", JSON.stringify(allToDos));
 };
+
+// Inicialization
+loadFromLocalStorage();
