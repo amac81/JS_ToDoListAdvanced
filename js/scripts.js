@@ -72,6 +72,7 @@ const updateToDo = (text) => {
         let todoText = toDo.querySelector("h3");
         if(todoText.innerText === oldToDoText){
             todoText.innerText = text;
+            updateToDoTextLocalStorage(oldToDoText, text);
         }        
     });
 }
@@ -156,6 +157,20 @@ const deleteToDoFromLocalStorage  = (todoText)=> {
    
  };
 
+ const updateToDoTextLocalStorage  = (oldText, newText)=> {
+    const allToDos = getAllToDosFromLocalStorage();
+
+    //map does not return data, it changes the original data
+    allToDos.map((toDo) => toDo.text === oldText
+        ? (toDo.text = newText) 
+        : null
+    );
+    
+    //replace local storage key allToDos with the content of filteredToDos
+    localStorage.setItem("allToDos", JSON.stringify(allToDos));
+   
+ };
+
 
 // Events
 
@@ -190,7 +205,7 @@ document.addEventListener("click", (elem) => {
     if(targetElement.classList.contains("edit-todo")) {
         toggleForms();
         editInput.value = currentToDoText;
-        oldToDoText = currentToDoText;
+        oldToDoText = currentToDoText;        
     }
 
     //delete ToDo
