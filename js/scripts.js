@@ -126,7 +126,6 @@ const loadFromLocalStorage  = ()=> {
     });
 };
 
-
 const deleteToDoFromLocalStorage  = (todoText)=> {
     const allToDos = getAllToDosFromLocalStorage();
     
@@ -141,6 +140,20 @@ const deleteToDoFromLocalStorage  = (todoText)=> {
         toolBar.classList.add("hide");   
     }
 
+ };
+
+ const updateToDoStatusLocalStorage  = (toDoText)=> {
+    const allToDos = getAllToDosFromLocalStorage();
+    
+    //map does not return data, it changes the original data
+    allToDos.map((toDo) => toDo.text === toDoText 
+        ? (toDo.done = !toDo.done) 
+        : null
+    );
+    
+    //replace local storage key allToDos with the content of filteredToDos
+    localStorage.setItem("allToDos", JSON.stringify(allToDos));
+   
  };
 
 
@@ -170,6 +183,7 @@ document.addEventListener("click", (elem) => {
     //finish ToDo
     if(targetElement.classList.contains("finish-todo")) {
         parentElement.classList.toggle("done");
+        updateToDoStatusLocalStorage(currentToDoText);
     }
     
     //edit ToDo
