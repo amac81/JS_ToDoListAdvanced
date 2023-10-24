@@ -9,16 +9,17 @@ const searchInput = document.querySelector("#search-input");
 const eraseBtn = document.querySelector("#erase-button");
 const filterBtn = document.querySelector("#filter-select");
 const emptyListElem = document.querySelector("#empty-list");
+const toolBar = document.querySelector("#toolbar");
+
 
 //global variables
 let oldToDoText;
 
 // Functions
 const addToDoToList = (text, done = false, save = true) => {
-   console.log("addding")
-    
+      
     emptyListElem.classList.add("hide");   
-    
+    toolBar.classList.remove("hide");   
 
     const toDoItemDiv = document.createElement("div");
     toDoItemDiv.classList.add("todo-item");
@@ -136,7 +137,8 @@ const deleteToDoFromLocalStorage  = (todoText)=> {
     localStorage.setItem("allToDos", JSON.stringify(filteredToDos));
 
     if(filteredToDos.length === 0){
-        emptyListElem.classList.remove("hide");   
+        emptyListElem.classList.remove("hide");
+        toolBar.classList.add("hide");   
     }
 
  };
