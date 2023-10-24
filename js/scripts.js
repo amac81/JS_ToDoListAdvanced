@@ -8,12 +8,18 @@ const cancelEditBtn = document.querySelector("#cancel-edit-btn");
 const searchInput = document.querySelector("#search-input");
 const eraseBtn = document.querySelector("#erase-button");
 const filterBtn = document.querySelector("#filter-select");
+const emptyListElem = document.querySelector("#empty-list");
 
 //global variables
-let oldInputValue;
+let oldToDoText;
 
 // Functions
 const addToDoToList = (text, done = false, save = true) => {
+   console.log("addding")
+    
+    emptyListElem.classList.add("hide");   
+    
+
     const toDoItemDiv = document.createElement("div");
     toDoItemDiv.classList.add("todo-item");
     const todoTitle = document.createElement("h3");
@@ -63,7 +69,7 @@ const updateToDo = (text) => {
     
     allToDos.forEach((toDo) => {
         let todoText = toDo.querySelector("h3");
-        if(todoText.innerText === oldInputValue){
+        if(todoText.innerText === oldToDoText){
             todoText.innerText = text;
         }        
     });
@@ -113,12 +119,28 @@ const filterToDos = (filterValue) => {
 
 const loadFromLocalStorage  = ()=> {
     const allToDos = getAllToDosFromLocalStorage();
-    
+
     allToDos.forEach((toDo) => {
         addToDoToList(toDo.text, toDo.done, false);
     });
-
 };
+
+
+const deleteToDoFromLocalStorage  = (todoText)=> {
+    const allToDos = getAllToDosFromLocalStorage();
+    
+    //filteredToDos have all ToDo's that the text doesn't match with todoText
+    const filteredToDos = allToDos.filter((toDo) => toDo.text !== todoText);
+    
+    //replace local storage key allToDos with the content of filteredToDos
+    localStorage.setItem("allToDos", JSON.stringify(filteredToDos));
+
+    if(filteredToDos.length === 0){
+        emptyListElem.classList.remove("hide");   
+    }
+
+ };
+
 
 // Events
 
@@ -133,14 +155,14 @@ todoForm.addEventListener("submit", (e) => {
 });
 
 
-//buttons click event
+//ToDo item buttons click event
 document.addEventListener("click", (elem) => {
     const targetElement = elem.target;
     const parentElement = targetElement.closest("div");
-    let todoText;
+    let currentToDoText;
     
     if(parentElement && parentElement.querySelector("h3")){
-        todoText = parentElement.querySelector("h3").innerText;
+        currentToDoText = parentElement.querySelector("h3").innerText;
     }
 
     //finish ToDo
@@ -151,13 +173,14 @@ document.addEventListener("click", (elem) => {
     //edit ToDo
     if(targetElement.classList.contains("edit-todo")) {
         toggleForms();
-        editInput.value = todoText;
-        oldInputValue = todoText;
+        editInput.value = currentToDoText;
+        oldToDoText = currentToDoText;
     }
 
     //delete ToDo
     if(targetElement.classList.contains("delete-todo")) {
         parentElement.remove();
+        deleteToDoFromLocalStorage(currentToDoText);
     }
 
 });
@@ -204,10 +227,9 @@ const getAllToDosFromLocalStorage = () => {
 }
 
 const addToDoToListLocalStorage = (toDo) => {
-
     const allToDos = getAllToDosFromLocalStorage();
     allToDos.push(toDo);
-
+    
     localStorage.setItem("allToDos", JSON.stringify(allToDos));
 };
 
